@@ -90,5 +90,4 @@ elecciones.pedirCandidatos();
 elecciones.pedirVotantes();
 elecciones.votar();
 elecciones.mostrarVotos();
-elecciones.mostrarGanador();
 

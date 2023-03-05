@@ -40,12 +40,21 @@ namespace Examen
         {
             for (int i = 1; i <= _ncandidatos; i++)
             {
-                Console.WriteLine("Candidato " + i + " tiene " + candidatos[i - 1] + " votos");
+                Console.WriteLine("Candidato " + i + " tiene :" + candidatos[i - 1] + " votos");
             }
+            int max = candidatos.Max();
+            int pos = mostrarGanador(candidatos, max, 0) + 1;
+            Console.WriteLine("El ganador con " + candidatos.Max() + " votos, es el Candidato " + pos);
         }
-        public void mostrarGanador()
+        public static int mostrarGanador(int[] array, int elementob, int indice)
         {
-            Console.WriteLine("El ganador con " + candidatos.Max() + " votos, es el candidato ");
+            if (indice == array.Length)
+                return -1;
+            else if (array[indice] == elementob)
+                return indice;
+            else
+                return mostrarGanador(array, elementob, indice + 1);
+            
         }
     }
 }
