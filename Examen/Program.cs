@@ -84,7 +84,7 @@ for (int i = 1; i <= ncandidatos; i++)
 */
 
 using Examen;
-
+Console.ForegroundColor = ConsoleColor.Green;
 Elecciones elecciones = new Elecciones();
 elecciones.pedirCandidatos();
 elecciones.pedirVotantes();
