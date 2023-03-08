@@ -11,7 +11,7 @@ namespace Examen
         private int _ncandidatos;
         private int _nvotantes;
         private int _voto;
-        private int[] candidatos;
+        private List<Candidato> _candidatos = new List<Candidato>();
 
         public void pedirCandidatos()
         {
@@ -22,6 +22,16 @@ namespace Examen
                 Console.Clear();
                 validarint(_ncandidatos);
             } while (_ncandidatos <= 0);
+            crearCandidatos();
+
+        }
+
+        public void crearCandidatos()
+        {
+            for (int n = 1; n <= _ncandidatos; n++)
+            {
+                _candidatos.Add(new Candidato() { Id = n });
+            }
 
         }
         public void pedirVotantes()
@@ -36,15 +46,14 @@ namespace Examen
         }
         public void votar()
         {
-            candidatos = new int[_ncandidatos];
             for (int i = 1; i <= _nvotantes; i++)
             {
                 do
                 {
                     Console.WriteLine($"Votante {i}, Ingresar que candidato eliges: ");
                     _voto = int.Parse(Console.ReadLine());
-                    if (_voto <= _ncandidatos)
-                        candidatos[_voto - 1]++;
+                    if (_candidatos.Where(x => x.Id == _voto).Any())
+                        _candidatos.First(x => x.Id == _voto).Votos += 1;
                     else
                     {
                         Console.WriteLine("El candidato ingresado no existe");
@@ -57,27 +66,19 @@ namespace Examen
         }
         public void mostrarVotos()
         {
-            for (int i = 1; i <= _ncandidatos; i++)
+            foreach (Candidato c in _candidatos.OrderByDescending(x => x.Votos))
             {
-                Console.WriteLine($"Candidato {i} tiene : {candidatos[i - 1]} votos");
+                Console.WriteLine($"Candidato {c.Id} tiene : {c.Votos} votos");
             }
-            int max = candidatos.Max();
-            int pos = mostrarGanador(candidatos, max, 0) + 1;
-            if (candidatos.Length != candidatos.Distinct().Count())
-                Console.WriteLine("No hay ningun ganador");
+            int maxVotos = _candidatos.Max(x => x.Votos);
+
+            if (_candidatos.Count(x => x.Votos == maxVotos) > 1)
+                Console.WriteLine("No hay ganador, se encontraron candidatos empatados");
 
             else
-                Console.WriteLine($"El ganador con {candidatos.Max()} votos, es el Candidato {pos}");
+                Console.WriteLine($"El ganador con {maxVotos} votos, es el Candidato {_candidatos.First(x => x.Votos == maxVotos).Id}");
         }
-        public static int mostrarGanador(int[] array, int elementob, int indice)
-        {
-            if (indice == array.Length)
-                return -1;
-            else if (array[indice] == elementob)
-                return indice;
-            else
-                return mostrarGanador(array, elementob, indice + 1);
-        }
+
         public void validarint(int n)
         {
             if (n <= 0)
