@@ -41,7 +41,7 @@ namespace Examen
             {
                 do
                 {
-                    Console.WriteLine("Votante " + i + ", Ingresar que candidato eliges: ");
+                    Console.WriteLine($"Votante {i}, Ingresar que candidato eliges: ");
                     _voto = int.Parse(Console.ReadLine());
                     if (_voto <= _ncandidatos)
                         candidatos[_voto - 1]++;
@@ -59,7 +59,7 @@ namespace Examen
         {
             for (int i = 1; i <= _ncandidatos; i++)
             {
-                Console.WriteLine("Candidato " + i + " tiene :" + candidatos[i - 1] + " votos");
+                Console.WriteLine($"Candidato {i} tiene : {candidatos[i - 1]} votos");
             }
             int max = candidatos.Max();
             int pos = mostrarGanador(candidatos, max, 0) + 1;
@@ -67,7 +67,7 @@ namespace Examen
                 Console.WriteLine("No hay ningun ganador");
 
             else
-                Console.WriteLine("El ganador con " + candidatos.Max() + " votos, es el Candidato " + pos);
+                Console.WriteLine($"El ganador con {candidatos.Max()} votos, es el Candidato {pos}");
         }
         public static int mostrarGanador(int[] array, int elementob, int indice)
         {
