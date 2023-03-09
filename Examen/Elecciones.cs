@@ -66,7 +66,11 @@ namespace Examen
                 else
                     Console.WriteLine($"El ganador con {maxVotos} votos, es el Candidato {_candidatos.First(x => x.Votos == maxVotos).Id}");
             }
-
+            /// <summary>
+            /// Permite capturar un valor al usuario y valida si es un numero entero
+            /// </summary>
+            /// <param name="mensaje">Mensaje que se le mostrara al usuario</param>
+            /// <returns>Int</returns>
             public int validarint(string mensaje)
             {
                 int n;
