@@ -23,7 +23,6 @@ namespace Examen
                 validarint(_ncandidatos);
             } while (_ncandidatos <= 0);
             crearCandidatos();
-
         }
 
         public void crearCandidatos()
@@ -53,7 +52,7 @@ namespace Examen
                     Console.WriteLine($"Votante {i}, Ingresar que candidato eliges: ");
                     _voto = int.Parse(Console.ReadLine());
                     if (_candidatos.Where(x => x.Id == _voto).Any())
-                        _candidatos.First(x => x.Id == _voto).Votos += 1;
+                        _candidatos.First(x => x.Id == _voto).sumarVoto();
                     else
                     {
                         Console.WriteLine("El candidato ingresado no existe");

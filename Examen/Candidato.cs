@@ -10,5 +10,11 @@ namespace Examen
     {
         public int Id { get; set; }
         public int Votos { get; set; }
+
+        public void sumarVoto()
+        {
+            Votos++;
+        }
+
     }
 }
