@@ -79,6 +79,7 @@ namespace Examen
                     vn = Console.ReadLine();
                     esNumero = int.TryParse(vn, out n);
                     Console.Clear();
+                    Console.WriteLine("El valor capturado, no es un numero entero");
                 } while (!esNumero);
                 return n;
             }
