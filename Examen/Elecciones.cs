@@ -15,13 +15,8 @@ namespace Examen
 
         public void pedirCandidatos()
         {
-            do
-            {
-                Console.WriteLine("Escribir numero de candidatos: ");
-                _ncandidatos = int.Parse(Console.ReadLine());
-                Console.Clear();
-                validarint(_ncandidatos);
-            } while (_ncandidatos <= 0);
+            _ncandidatos = validarint("Escribe el numero de candidatos: ");
+            Console.Clear();
             crearCandidatos();
         }
 
@@ -35,57 +30,57 @@ namespace Examen
         }
         public void pedirVotantes()
         {
-            do
-            {
-                Console.WriteLine("Escribir numero de votantes: ");
-                _nvotantes = int.Parse(Console.ReadLine());
-                Console.Clear();
-                validarint(_nvotantes);
-            } while (_nvotantes <= 0);
+            _nvotantes = validarint("Escribir numero de votantes: ");
+            Console.Clear();
         }
         public void votar()
-        {
-            for (int i = 1; i <= _nvotantes; i++)
             {
+                for (int i = 1; i <= _nvotantes; i++)
+                {
+                    do
+                    {
+                        _voto = validarint($"Votante {i}, Ingresar que candidato eliges: ");
+                        if (_candidatos.Where(x => x.Id == _voto).Any())
+                            _candidatos.First(x => x.Id == _voto).sumarVoto();
+                        else
+                        {
+                            Console.WriteLine("El candidato ingresado no existe");
+                            Console.ReadLine();
+                            _voto = 0;
+                        }
+                        Console.Clear();
+                    } while (_voto <= 0);
+                }
+            }
+            public void mostrarVotos()
+            {
+                foreach (Candidato c in _candidatos.OrderByDescending(x => x.Votos))
+                {
+                    Console.WriteLine($"Candidato {c.Id} tiene : {c.Votos} votos");
+                }
+                int maxVotos = _candidatos.Max(x => x.Votos);
+
+                if (_candidatos.Count(x => x.Votos == maxVotos) > 1)
+                    Console.WriteLine("No hay ganador, se encontraron candidatos empatados");
+
+                else
+                    Console.WriteLine($"El ganador con {maxVotos} votos, es el Candidato {_candidatos.First(x => x.Votos == maxVotos).Id}");
+            }
+
+            public int validarint(string mensaje)
+            {
+                int n;
+                string vn;
+                bool esNumero;
+
                 do
                 {
-                    Console.WriteLine($"Votante {i}, Ingresar que candidato eliges: ");
-                    _voto = int.Parse(Console.ReadLine());
-                    if (_candidatos.Where(x => x.Id == _voto).Any())
-                        _candidatos.First(x => x.Id == _voto).sumarVoto();
-                    else
-                    {
-                        Console.WriteLine("El candidato ingresado no existe");
-                        Console.ReadLine();
-                        _voto = 0;
-                    }
+                    Console.Write(mensaje);
+                    vn = Console.ReadLine();
+                    esNumero = int.TryParse(vn, out n);
                     Console.Clear();
-                } while (_voto <= 0);
+                } while (!esNumero);
+                return n;
             }
-        }
-        public void mostrarVotos()
-        {
-            foreach (Candidato c in _candidatos.OrderByDescending(x => x.Votos))
-            {
-                Console.WriteLine($"Candidato {c.Id} tiene : {c.Votos} votos");
-            }
-            int maxVotos = _candidatos.Max(x => x.Votos);
-
-            if (_candidatos.Count(x => x.Votos == maxVotos) > 1)
-                Console.WriteLine("No hay ganador, se encontraron candidatos empatados");
-
-            else
-                Console.WriteLine($"El ganador con {maxVotos} votos, es el Candidato {_candidatos.First(x => x.Votos == maxVotos).Id}");
-        }
-
-        public void validarint(int n)
-        {
-            if (n <= 0)
-            {
-                Console.WriteLine("El numero ingresado debe ser un entero");
-                Console.ReadLine();
-                Console.Clear();
-            }
-        }
-    }
+        } 
 }
